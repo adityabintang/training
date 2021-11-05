@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:trainingbasicflutter/constant.dart';
+import 'package:trainingbasicflutter/data/dataglobal.dart';
+import 'package:trainingbasicflutter/data/prefs.dart';
 import 'package:trainingbasicflutter/homescreen.dart';
+import 'package:trainingbasicflutter/res/resUser.dart';
 import 'package:trainingbasicflutter/ui/auth/register.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,35 +30,36 @@ class _LoginPageState extends State<LoginPage> {
     try {
       var res = await http.post(Uri.parse(loginAccount),
           body: {'email': email.text, 'password': password.text});
-      var data = jsonDecode(res.body);
+      ResUser data = ResUser.fromJson(jsonDecode(res.body));
       log("hahahaha : ${res.body}");
-      if (data['status'] == 200) {
+      if (data.status == 200) {
+        dataGlobal.user = data.user;
+        await Prefs.saveUser();
         setState(() {
           isLoading = false;
-
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
               (route) => false);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("${data['message']}"),
+              content: Text("${data.message}"),
             ),
           );
         });
-      } else if (data['status'] == 404) {
+      } else if (data.status == 404) {
         setState(() {
           isLoading = false;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("${data['message']}"),
+              content: Text("${data.message}"),
             ),
           );
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("${data['message']}"),
+            content: Text("${data.message}"),
           ),
         );
       }
