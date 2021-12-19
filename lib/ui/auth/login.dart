@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
           Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
-              (route) => false);
+                  (route) => false);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text("${data.message}"),
@@ -198,21 +198,21 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(20),
                         child: isLoading
                             ? Center(
-                                child: CircularProgressIndicator(),
-                              )
+                          child: CircularProgressIndicator(),
+                        )
                             : MaterialButton(
-                                onPressed: () {
-                                  //home screen
-                                 loginCustomer();
-                                },
-                                padding: EdgeInsets.symmetric(vertical: 15),
-                                color: Colors.black,
-                                elevation: 0,
-                                child: Text(
-                                  "Login",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
+                          onPressed: () {
+                            //home screen
+                            loginCustomer();
+                          },
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          color: Colors.black,
+                          elevation: 0,
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
                       ),
                     ),
                   ),
